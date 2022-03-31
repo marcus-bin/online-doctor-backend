@@ -38,7 +38,7 @@ class KnowledgeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = KnowledgeCat
-        fields = ['id', 'body', 'depart']
+        fields = ['id', 'body', 'depart', 'name']
         read_only_fields = ['depart']
 
 
@@ -46,14 +46,14 @@ class ArticleListSerializer(serializers.ModelSerializer):
     """
     专家文章列表序列化器
     """
-    # category = KnowledgeCatSerializer2(many=True)
+    cate = serializers.ReadOnlyField(source="category.name")
+    author = serializers.ReadOnlyField(source="author.username")
 
     class Meta:
         model = Article
-        fields = ['id', 'category', 'title', 'author', 'create_time']
+        fields = ['id', 'cate', 'title', 'author', 'create_time']
         read_only_fields = ['create_time']
-        depth = 1
-
+        
 
 class ArticleDetailSerializer(serializers.ModelSerializer):
     """

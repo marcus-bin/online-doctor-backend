@@ -9,7 +9,6 @@ class UserFavDetailSerializer(serializers.ModelSerializer):
     '''
 
     #通过文章id获取收藏的文章，需要嵌套文章的序列化
-    articel = ArticleListSerializer()
     class Meta:
         model = UserFav
         fields = ("article", "id")

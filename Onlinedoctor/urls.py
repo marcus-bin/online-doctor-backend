@@ -21,10 +21,11 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from apps.trade.views import DoctorViewSet
 from apps.user_operation.views import LeavingMessageViewset, UserFavViewset
 from apps.users.views import DepartmentViewSet, UserViewset
 from apps.article.views import  CategoryViewSet, KnowledgeListViewSet, ArticleViewSet
-from apps.trade.views import DoctorViewSet
+
 
 router = DefaultRouter()
 # 配置知识区分类的url
