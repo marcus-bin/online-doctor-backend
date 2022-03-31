@@ -35,7 +35,7 @@ class KnowledgeSerializer(serializers.ModelSerializer):
     """
     # 与model字段中定义保持一致，不需要使用related_name
     depart = DepartmentSerializer2(many=True, read_only=True)
-
+    
     class Meta:
         model = KnowledgeCat
         fields = ['id', 'body', 'depart', 'name']
@@ -59,8 +59,10 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
     """
     专家文章详情序列化器
     """
+    cate = serializers.ReadOnlyField(source="category.name")
+    author = serializers.ReadOnlyField(source="author.username")
 
     class Meta:
         model = Article
-        fields = "__all__"
+        exclude = ['category', 'update_time']
         read_only_fields = ['create_time']

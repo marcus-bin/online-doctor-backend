@@ -52,15 +52,3 @@ class KnowledgeCat(models.Model):
     def __str__(self):
         return self.name
 
-
-# class Knowledge(models.Model):
-#     category = models.ForeignKey(KnowledgeCat, null=True, on_delete=models.SET_NULL, verbose_name='分类id', related_name='knowledges')
-#     body = models.TextField(verbose_name='知识区文章')
-
-#     class Meta:
-#         ordering = ['-id']
-#         verbose_name = '知识区文章'
-#         verbose_name_plural = verbose_name
-
-#     def __str__(self):
-#         return self.body[:20]
