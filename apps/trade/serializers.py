@@ -3,6 +3,8 @@ from rest_framework import serializers
 from apps.trade.models import Doctor
 
 class DoctorListSerializer(serializers.ModelSerializer):
+
+    
     
     class Meta:
         model = Doctor

@@ -1,10 +1,10 @@
 from datetime import datetime
-from pydoc import Doc
 from django.db import models
 from apps.article.models import Article
-from apps.trade.models import Doctor
 
 from django.contrib.auth import get_user_model
+
+from apps.trade.models import Doctor
 User = get_user_model()
 
 
@@ -19,6 +19,7 @@ class UserFav(models.Model):
 
 
     class Meta:
+        ordering = ['-add_time']
         verbose_name = '用户收藏'
         verbose_name_plural = verbose_name
         unique_together = ("user", "goods")
@@ -27,6 +28,22 @@ class UserFav(models.Model):
         return self.user.username
 
 
+class UserInfo(models.Model):
+    """
+    用户个人中心资料
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='关联用户')
+    real_name = models.CharField("真实姓名", max_length=10, default='')
+    mobile = models.IntegerField('手机号', max_length=11, default='')
+    
+    class Meta:
+        ordering = ['id']
+        verbose_name='个人中心'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.real_name
+
 
 class UserLeavingMessage(models.Model):
     """
@@ -34,13 +51,13 @@ class UserLeavingMessage(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户")
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, verbose_name="关联医生")
-    subject = models.CharField("主题",max_length=100, default="")
     message = models.TextField("留言内容",default="",help_text="留言内容")
     add_time = models.DateTimeField("添加时间",default=datetime.now)
 
     class Meta:
+        ordering = ['-add_time']
         verbose_name = "用户留言"
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.subject
+        return self.doctor.name

@@ -21,7 +21,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from apps.users.views import DepartmentViewSet
+from apps.user_operation.views import LeavingMessageViewset, UserFavViewset
+from apps.users.views import DepartmentViewSet, UserViewset
 from apps.article.views import  CategoryViewSet, KnowledgeListViewSet, ArticleViewSet
 from apps.trade.views import DoctorViewSet
 
@@ -36,6 +37,13 @@ router.register(r'department', DepartmentViewSet, basename='department')
 router.register(r'article', ArticleViewSet, basename="article")
 # 配置医生列表及详情的url
 router.register(r'doctor', DoctorViewSet, basename="doctor")
+#配置用户的url
+router.register(r'users', UserViewset, basename="users")
+# 配置用户收藏的url
+router.register(r'userfavs', UserFavViewset, basename="userfavs")
+# 配置用户留言的url
+router.register(r'messages', LeavingMessageViewset, basename="messages")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,9 +52,9 @@ urlpatterns = [
     # token
     path('api-token-auth/', views.obtain_auth_token),
     #drf文档，title自定义
-    path('docs',include_docs_urls(title='反方向的钟')),
+    path('docs',include_docs_urls(title='康乐api接口文档')),
     # jwt的token认证接口
-    path('jwt-auth/', obtain_jwt_token)
+    path('login/', obtain_jwt_token)
 ]
 
 # 文件路由
