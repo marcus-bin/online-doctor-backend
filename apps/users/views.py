@@ -1,7 +1,7 @@
 from rest_framework import mixins, viewsets
-from apps.users.serializers import DepartmentSerializer, UserRegSerializer, UserDetailSerializer
+from apps.users.serializers import DepartmentSerializer, PatientInfoDetailSerializer, PatientInfoListSerializer, UserRegSerializer, UserDetailSerializer
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from apps.users.models import Department
+from apps.users.models import Department, PatientInfo
 from rest_framework import status, permissions, authentication
 from rest_framework.response import Response
 from rest_framework_jwt.serializers import jwt_encode_handler,jwt_payload_handler
@@ -20,6 +20,21 @@ class DepartmentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewse
 
     queryset = Department.objects.filter(category_type=1)
     serializer_class = DepartmentSerializer
+
+
+class PationtInfoViewSet(viewsets.ModelViewSet):
+    """
+    病例列表及详情
+    """
+    queryset = PatientInfo.objects.all()
+    serializer_class = PatientInfoListSerializer
+
+    # 动态选择序列化器
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return PatientInfoListSerializer
+        else:
+            return PatientInfoDetailSerializer
 
 
 class UserViewset(mixins.CreateModelMixin,mixins.RetrieveModelMixin,mixins.UpdateModelMixin,viewsets.GenericViewSet):

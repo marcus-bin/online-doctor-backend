@@ -23,7 +23,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from apps.trade.views import DoctorViewSet
 from apps.user_operation.views import LeavingMessageViewset, UserFavViewset
-from apps.users.views import DepartmentViewSet, UserViewset
+from apps.users.views import DepartmentViewSet, PationtInfoViewSet, UserViewset
 from apps.article.views import  CategoryViewSet, KnowledgeListViewSet, ArticleViewSet
 
 
@@ -44,7 +44,8 @@ router.register(r'users', UserViewset, basename="users")
 router.register(r'userfavs', UserFavViewset, basename="userfavs")
 # 配置用户留言的url
 router.register(r'messages', LeavingMessageViewset, basename="messages")
-
+# 配置在线问病例接口
+router.register(r'patientinfo', PationtInfoViewSet, basename="patientinfo")
 
 urlpatterns = [
     path('admin/', admin.site.urls),

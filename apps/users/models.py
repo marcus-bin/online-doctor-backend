@@ -47,17 +47,46 @@ class UserInfo(AbstractUser):
         return self.name
 
 
-class VerifyCode(models.Model):
+class PatientInfo(models.Model):
     """
-    验证码
+    患者信息
     """
-    code = models.CharField("验证码",max_length=10)
-    mobile = models.CharField("电话",max_length=11)
-    add_time = models.DateTimeField("添加时间",default=datetime.now)
+
+    GENDER_CHOICES = (
+        ("1", "男"),
+        ("2", "女")
+    )
+    desc = models.CharField("病况描述", max_length=500)
+    name = models.CharField("患者姓名", max_length=10)
+    age = models.IntegerField("年龄", max_length=3)
+    height = models.DecimalField("身高", max_digits=5, decimal_places=2)
+    weight = models.DecimalField("体重", max_digits=5, decimal_places=2)
+    gender = models.CharField("性别",max_length=6, choices=GENDER_CHOICES, default='1')
+    supplement = models.CharField("补充细节", max_length=256)
+    depart = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True, verbose_name='会诊科室')
 
     class Meta:
-        verbose_name = "短信验证"
+        verbose_name = "患者信息"
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.code
+        return self.name
+
+
+
+
+
+# class VerifyCode(models.Model):
+#     """
+#     验证码
+#     """
+#     code = models.CharField("验证码",max_length=10)
+#     mobile = models.CharField("电话",max_length=11)
+#     add_time = models.DateTimeField("添加时间",default=datetime.now)
+
+#     class Meta:
+#         verbose_name = "短信验证"
+#         verbose_name_plural = verbose_name
+
+#     def __str__(self):
+#         return self.code

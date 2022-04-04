@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.users.models import Department, UserInfo
+from apps.users.models import Department, PatientInfo, UserInfo
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import get_user_model
 
@@ -22,7 +22,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Department
-        fields = ['name', 'sub_cat']
+        fields = ['id', 'name', 'sub_cat']
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
@@ -50,3 +50,22 @@ class UserRegSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInfo
         fields = ('username','password')        
+
+
+class PatientInfoListSerializer(serializers.ModelSerializer):
+    """
+    病例列表
+    """
+    class Meta:
+        model = PatientInfo
+        fields = ['desc']
+
+
+class PatientInfoDetailSerializer(serializers.ModelSerializer):
+    """
+    病例详情
+    """
+
+    class Meta:
+        model = PatientInfo
+        fields = "__all__"
